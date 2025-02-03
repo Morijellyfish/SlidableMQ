@@ -81,7 +81,7 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
                 if(SelectingX != SelectedX)
                 {
                     SelectedX = SelectingX;
-                    device.SendHapticImpulse(0, 1);
+                   // device.SendHapticImpulse(0, 1);
                 }
                 //‘I‘ğo—ˆ‚Ä‚é”ÍˆÍ‚ÌŠp“x
                 if (0 <= SelectingX && SelectingX <= 9)

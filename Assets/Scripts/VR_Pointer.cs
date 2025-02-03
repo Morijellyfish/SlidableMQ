@@ -14,7 +14,7 @@ public class VR_Pointer : MonoBehaviour
     void Update()
     {
         //Ray
-        Vector3 target = -transform.forward;
+        Vector3 target = transform.forward;
         Ray ray = new Ray(transform.position, target);
         if (Physics.Raycast(ray, out RaycastHit hit, 50.0f))
         {
