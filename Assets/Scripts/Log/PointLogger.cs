@@ -8,6 +8,13 @@ public class PointLogger : MonoBehaviour
     static public Vector2 Point_L;
     static public Vector2 Point_R;
 
+    [SerializeField] GameObject Head;
+    [SerializeField] GameObject LeftHand;
+    [SerializeField] GameObject RightHand;
+
+    static public bool TriggerL = false;
+    static public bool TriggerR = false;
+
     bool Saved = false;
     string tmplog = "";
 
@@ -59,16 +66,20 @@ public class PointLogger : MonoBehaviour
         }
 
         //ÉçÉO
-        string log = $"{Point_L.x:F3},{Point_L.y:F3},{Point_R.x:F3},{Point_R.y:F3},{targetPos.x},{targetPos.y},{target},{TypingManager.time:F4},{GameMaster.SlideMode}\r\n";
+        string log = $"{Point_L.x:F3},{Point_L.y:F3},{Point_R.x:F3},{Point_R.y:F3},{targetPos.x},{targetPos.y},{target},{TypingManager.time:F4},{GameMaster.SlideMode},";
+        log += $"{Head.transform.position},{Head.transform.rotation},";
+        log += $"{TriggerL},{LeftHand.transform.position},{LeftHand.transform.rotation},";
+        log += $"{TriggerR},{RightHand.transform.position},{RightHand.transform.rotation}";
+        log += "\r\n";
         tmplog += log;
-        //Debug.Log(log);
+        Debug.Log(log);
     }
 
     void FileSave()
     {
         string path = Path.Combine(Application.persistentDataPath, System.DateTime.Now.ToString("yyyyMMddHHmmss-") + "log.csv");
         Saved = true;
-        tmplog = "Lx,Ly,Rx,Ry,Tx,Ty,Target,Time,SlideMode\r\n" + tmplog;
+        tmplog = "Lx,Ly,Rx,Ry,Tx,Ty,Target,Time,SlideMode,HeadP,HeadR,LTrigger,LHandP,LHandR,RTrigger,RHandP,RHandR\r\n" + tmplog;
         File.AppendAllText(path, tmplog);
         tmplog = "";
         Debug.Log("Saved");

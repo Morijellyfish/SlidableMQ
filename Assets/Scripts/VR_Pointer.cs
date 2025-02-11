@@ -50,6 +50,15 @@ public class VR_Pointer : MonoBehaviour
                 {
                     device.TryGetFeatureValue(CommonUsages.triggerButton, out triggerValue);
                 }
+
+                if (device.characteristics.HasFlag(InputDeviceCharacteristics.Left))
+                {
+                    PointLogger.TriggerL = triggerValue;
+                }
+                if (device.characteristics.HasFlag(InputDeviceCharacteristics.Right))
+                {
+                    PointLogger.TriggerR = triggerValue;
+                }
             }
         }
     }
