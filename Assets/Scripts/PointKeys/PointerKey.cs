@@ -8,6 +8,6 @@ public class PointerKey : MonoBehaviour
 
     public void Input()
     {
-        TypingManager.CheckType(ch);
+        TaskManager.CheckType(ch);
     }
 }

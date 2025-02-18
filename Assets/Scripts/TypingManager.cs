@@ -7,49 +7,25 @@ using UnityEngine;
 
 public class TypingManager : MonoBehaviour
 {
-    public static int TaskNumber = 0;
-    public static string[] TaskTexts =
-    {
-       "banana", "dance", "jump", "chair", "kitten", "eagle", "quartz", "oxygen", "apple", "zebra", "silver", "friend"
-    };
-
-    public static string TaskText = "";
-    public static int TaskCount = 0;
-    public static char Target //log用
-    {
-        get
-        {
-
-            if (TaskCount >= TaskText.Length)
-            {
-                return ' ';
-            }
-            else
-            {
-                return TaskText[TaskCount];
-            }
-        }
-    }
-
     [SerializeField] TMP_Text TimeField;
     [SerializeField] TMP_Text TaskField;
     [SerializeField] TMP_Text InputField;
-    [SerializeField] TMP_Text MessageField;
-    static public TypingManager typingManager;
+    [SerializeField] public TMP_Text MessageField;
+    static public TypingManager instance;
     static public double time = 0;
     double preTime = 0;
 
     void Start()
     {
-        TaskNumber = 0;
-        typingManager = this;
-        SetTask(TaskTexts[TaskNumber]);
+        time = 0;
+        instance = this;
+        TaskManager.SetTaskNumber(0);
     }
 
     void Update()
     {
         //Timer
-        if (TaskCount != 0 && TaskCount != TaskText.Length)
+        if (TaskManager.TaskCount != 0 && TaskManager.TaskCount != TaskManager.TaskText.Length)
         {
             time += Time.timeAsDouble - preTime;
             TimeField.text = time.ToString(".000");
@@ -58,60 +34,20 @@ public class TypingManager : MonoBehaviour
 
         //Typing(Keyboard)
         char c = GetCharFromKeyCode();
-        CheckType(c);
+        TaskManager.CheckType(c);
 
         //TaskFinish
-        if (TaskCount != 0)
+        if (TaskManager.TaskCount != 0)
         {
-            InputField.text = TaskText.Substring(0, TaskCount);
+            InputField.text = TaskManager.TaskText.Substring(0, TaskManager.TaskCount);
         }
     }
 
-    static public void CheckType(char c)
-    {
-        if (c != '\0')
-        {
-            if (CheckInput(c))
-            {
-                TaskCount++;
-                if(TaskCount == TaskText.Length)
-                {
-                    NextTask();
-                }
-            }
-        }
 
-        bool CheckInput(char c)
-        {
-            if (TaskCount >= TaskText.Length)
-            {
-                return false;
-            }
-            return c == TaskText[TaskCount];
-        }
-    }
-
-    static public void NextTask()
+    public void SetTaskTexts(string tasktext)
     {
-        if (TaskNumber + 1 >= TaskTexts.Length)
-        {
-            typingManager.MessageField.text = "下に表示されるテキストを入力してください\r\n" + $"Finish!";
-            return;
-        }
-        else
-        {
-            TaskNumber++;
-            typingManager.SetTask(TaskTexts[TaskNumber]);
-        }
-    }
-
-    void SetTask(string tasktext)
-    {
-        MessageField.text = "下に表示されるテキストを入力してください\r\n" + $"{TaskNumber+1}/{TaskTexts.Length}";
-        TaskCount = 0;
+        MessageField.text = "下に表示されるテキストを入力してください\r\n" + $"{TaskManager.TaskNumber + 1}/{TaskManager.TaskTexts.Length}";
         InputField.text = "";
-        TaskText = tasktext;
-
         TaskField.text = tasktext;
     }
 

@@ -25,7 +25,7 @@ public class PointLogger : MonoBehaviour
 
     void FixedUpdate()
     {
-        char target = TypingManager.Target;
+        char target = TaskManager.Target;
 
         //•Û‘¶ó‘Ô‚ÌŠm”F
         if(target == ' ')

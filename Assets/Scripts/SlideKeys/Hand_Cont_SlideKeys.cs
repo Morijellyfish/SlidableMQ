@@ -92,7 +92,7 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
                     {
                         //keyInput.InputKD(KeyBoard_Array.KeyBoard[input_Y, SelectingX]);
                         //keyInput.InputKU(KeyBoard_Array.KeyBoard[input_Y, SelectingX]);
-                        TypingManager.CheckType(KeyBoard_Array.chKeyBoard[input_Y, SelectingX]);
+                        TaskManager.CheckType(KeyBoard_Array.chKeyBoard[input_Y, SelectingX]);
 
                         //Debug.Log("Button : " + KeyBoard_Array.KeyBoard[input_Y, SelectingX]);
                     }
