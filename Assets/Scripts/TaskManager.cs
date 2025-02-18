@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 static public class TaskManager
@@ -26,6 +27,13 @@ static public class TaskManager
                 return TaskText[TaskCount];
             }
         }
+    }
+
+    //タスクのシャッフル,重複無し
+    static public void ShuffleTasks()
+    {
+        System.Random rng = new System.Random();
+        TaskTexts = TaskTexts.OrderBy(a => rng.Next()).ToArray();
     }
 
     //タスクの設定

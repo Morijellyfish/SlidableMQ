@@ -19,6 +19,7 @@ public class TypingManager : MonoBehaviour
     {
         time = 0;
         instance = this;
+        TaskManager.ShuffleTasks();
         TaskManager.SetTaskNumber(0);
     }
 
