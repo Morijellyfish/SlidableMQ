@@ -1455,7 +1455,7 @@ GameObject:
   - component: {fileID: 432783242}
   - component: {fileID: 432783243}
   m_Layer: 0
-  m_Name: Type-Pointer
+  m_Name: TypeChange-Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5284,7 +5284,6 @@ MonoBehaviour:
   LR: 356
   Span: 18
   input_Y: 0
-  Cursor: {fileID: 1516617289}
 --- !u!4 &1221729817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7711406653701615174, guid: 6af20d18470c52d48ae61d571e2b469d, type: 3}
@@ -8356,6 +8355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b87a63214893ca4db07cb978175606c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CursorL: {fileID: 1516617289}
+  CursorR: {fileID: 1260395037}
 --- !u!1 &1883018358
 GameObject:
   m_ObjectHideFlags: 0
@@ -8660,7 +8661,6 @@ MonoBehaviour:
   LR: 612
   Span: 18
   input_Y: 0
-  Cursor: {fileID: 1260395037}
 --- !u!1 &1998018323
 GameObject:
   m_ObjectHideFlags: 0
@@ -9420,7 +9420,7 @@ GameObject:
   - component: {fileID: 2138816324}
   - component: {fileID: 2138816329}
   m_Layer: 0
-  m_Name: Type-Slide
+  m_Name: TypeChange-Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

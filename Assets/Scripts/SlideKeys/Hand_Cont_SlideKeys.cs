@@ -13,7 +13,6 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
     public int input_Y;
 
     TMP_Text tmp; //ŽèŒ³‚Ì“z
-    [SerializeField] RawImage Cursor;
 
     bool triggerValue = false;
 
@@ -76,7 +75,8 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
                 }
 
                 //ui
-                Cursor.rectTransform.anchoredPosition = new Vector2(SelectingX * 100 - 450, input_Y * -100 + 100);
+                var cursor = LR.HasFlag(InputDeviceCharacteristics.Left) ? HUD_Main.instance.CursorL : HUD_Main.instance.CursorR;
+                cursor.rectTransform.anchoredPosition = new Vector2(SelectingX * 100 - 450, input_Y * -100 + 100);
 
                 if(SelectingX != SelectedX)
                 {

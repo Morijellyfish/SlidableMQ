@@ -1,19 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUD_Main : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] public RawImage CursorL;
+    [SerializeField] public RawImage CursorR;
+
+    static public HUD_Main instance;
+
+    void Awake()
     {
-        
+        instance = this;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(GameMode.mode == GameMode.InputMode.SlideKeys)
+        if (GameMode.mode == GameMode.InputMode.SlideKeys)
+        {
+            gameObject.SetActive(true);
+        }
+        else if (GameMode.mode == GameMode.InputMode.StickKeys)
         {
             gameObject.SetActive(true);
         }
