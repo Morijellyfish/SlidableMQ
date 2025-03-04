@@ -13,9 +13,13 @@ public class HUD_Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameMaster.SlideMode == false)
+        if(GameMode.mode == GameMode.InputMode.SlideKeys)
         {
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 }

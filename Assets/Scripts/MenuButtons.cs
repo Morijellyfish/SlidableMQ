@@ -7,13 +7,13 @@ public class MenuButtons : MonoBehaviour
 {
     public void PointMode()
     {
-        GameMaster.SlideMode = false;
+        GameMode.mode = GameMode.InputMode.PointKeys;
         SceneManager.LoadScene("Simple");
     }
 
     public void SlideMode()
     {
-        GameMaster.SlideMode = true;
+        GameMode.mode = GameMode.InputMode.SlideKeys;
         SceneManager.LoadScene("Simple");
     }
 }

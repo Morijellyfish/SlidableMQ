@@ -27,7 +27,7 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
     int SelectedX = 0;
     void Update()
     {
-        if(GameMaster.SlideMode == false)
+        if(GameMode.mode != GameMode.InputMode.SlideKeys)
         {
             tmp.gameObject.SetActive(false);
             this.enabled = false;

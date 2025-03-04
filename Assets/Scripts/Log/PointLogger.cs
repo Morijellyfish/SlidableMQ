@@ -54,19 +54,26 @@ public class PointLogger : MonoBehaviour
         //TargetPos‚ÌŒvŽZ
         Vector2 targetPos = Vector2.zero;
         Vector2 targetIndex = KeyBoard_Array.KeyPositions[target];
-        if (GameMaster.SlideMode)
+        switch (GameMode.mode)
         {
-            targetPos.y = targetIndex.y;
-        }
-        else
-        {
-            targetPos.x = 0.43f + (Mathf.Abs(targetIndex.x) - 1) * 0.7f;
-            targetPos.x *= targetIndex.x < 0 ? -1 : 1;
-            targetPos.y = targetIndex.y * 0.7f;
-        }
+            case GameMode.InputMode.SlideKeys:
+                targetPos.y = targetIndex.y;
+                break;
+            case GameMode.InputMode.PointKeys:
+                targetPos.x = 0.43f + (Mathf.Abs(targetIndex.x) - 1) * 0.7f;
+                targetPos.x *= targetIndex.x < 0 ? -1 : 1;
+                targetPos.y = targetIndex.y * 0.7f;
+                break;
+            case GameMode.InputMode.StickKeys:
+                break;
+            case GameMode.InputMode.Keyboard:
+                break;
+            default:
+                break;
+        };
 
         //ƒƒO
-        string log = $"{Point_L.x:F3},{Point_L.y:F3},{Point_R.x:F3},{Point_R.y:F3},{targetPos.x},{targetPos.y},{target},{TypingManager.time:F4},{GameMaster.SlideMode},";
+        string log = $"{Point_L.x:F3},{Point_L.y:F3},{Point_R.x:F3},{Point_R.y:F3},{targetPos.x},{targetPos.y},{target},{TypingManager.time:F4},{GameMode.mode.ToString()},";
         log += $"{Head.transform.position},{Head.transform.rotation},";
         log += $"{TriggerL},{LeftHand.transform.position},{LeftHand.transform.rotation},";
         log += $"{TriggerR},{RightHand.transform.position},{RightHand.transform.rotation}";

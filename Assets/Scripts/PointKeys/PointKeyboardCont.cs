@@ -12,7 +12,7 @@ public class PointKeyboardCont : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        keyboard.SetActive(!GameMaster.SlideMode);
+        keyboard.SetActive(GameMode.mode == GameMode.InputMode.PointKeys);
     }
 
     private void Update()
