@@ -11,6 +11,7 @@ public class TypingManager : MonoBehaviour
     [SerializeField] TMP_Text TaskField;
     [SerializeField] TMP_Text InputField;
     [SerializeField] public TMP_Text MessageField;
+    [SerializeField] public AudioClip AudioClip;
     static public TypingManager instance;
     static public double time = 0;
     double preTime = 0;
@@ -44,6 +45,12 @@ public class TypingManager : MonoBehaviour
         }
     }
 
+    public void PlayAudio()
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.clip = AudioClip;
+        audioSource.Play();
+    }
 
     public void SetTaskTexts(string tasktext)
     {

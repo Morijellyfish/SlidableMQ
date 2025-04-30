@@ -53,6 +53,7 @@ static public class TaskManager
             if (CheckInput(c))
             {
                 TaskCount++;
+                TypingManager.instance.PlayAudio();
                 if (TaskCount == TaskText.Length)
                 {
                     NextTask();
