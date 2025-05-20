@@ -19,14 +19,14 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
     private void Start()
     {
         tmp = GetComponentInChildren<TMP_Text>();
-        
+
 
     }
 
     int SelectedX = 0;
     void Update()
     {
-        if(GameMode.mode != GameMode.InputMode.SlideKeys)
+        if (GameMode.mode != GameMode.InputMode.SlideKeys)
         {
             tmp.gameObject.SetActive(false);
             this.enabled = false;
@@ -37,12 +37,12 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
 
         //Debug.DrawRay(transform.position, transform.forward, Color.red, 0.1f);
 
-        foreach(var device in inputDevices)
+        foreach (var device in inputDevices)
         {
             if (device.characteristics == LR)
             {
                 float HandAngle = transform.rotation.eulerAngles.y;
-                HandAngle   =   HandAngle >= 180 ?   HandAngle - 360 : HandAngle;
+                HandAngle = HandAngle >= 180 ? HandAngle - 360 : HandAngle;
                 float CameraAngle = Camera.main.transform.rotation.eulerAngles.y;
                 CameraAngle = CameraAngle >= 180 ? CameraAngle - 360 : CameraAngle;
                 float DiffAngle = HandAngle - CameraAngle;
@@ -51,11 +51,11 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
                 SelectingX += 5;
                 //è„â∫ì¸óÕ
                 device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 Axis);
-                if (0.9 < Axis.y)
+                if (0.7f < Axis.y)
                 {
                     input_Y = 0;
                 }
-                else if (-0.9 < Axis.y)
+                else if (-0.7f < Axis.y)
                 {
                     input_Y = 1;
                 }
@@ -78,10 +78,10 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
                 var cursor = LR.HasFlag(InputDeviceCharacteristics.Left) ? HUD_Main.instance.CursorL : HUD_Main.instance.CursorR;
                 cursor.rectTransform.anchoredPosition = new Vector2(SelectingX * 100 - 450, input_Y * -100 + 100);
 
-                if(SelectingX != SelectedX)
+                if (SelectingX != SelectedX)
                 {
                     SelectedX = SelectingX;
-                   // device.SendHapticImpulse(0, 1);
+                    // device.SendHapticImpulse(0, 1);
                 }
                 //ëIëèoóàÇƒÇÈîÕàÕÇÃäpìx
                 if (0 <= SelectingX && SelectingX <= 9)
