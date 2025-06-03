@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR;
 
 public class Hand_Cont_SlideKeys : MonoBehaviour
@@ -13,6 +12,7 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
     public int input_Y;
 
     TMP_Text tmp; //手元の奴
+    public char selectingChar = ' '; //選択中の文字
 
     bool triggerValue = false;
 
@@ -83,10 +83,12 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
                     SelectedX = SelectingX;
                     // device.SendHapticImpulse(0, 1);
                 }
+
                 //選択出来てる範囲の角度
                 if (0 <= SelectingX && SelectingX <= 9)
                 {
-                    tmp.text = KeyBoard_Array.chKeyBoard[input_Y, SelectingX].ToString();
+                    selectingChar = KeyBoard_Array.chKeyBoard[input_Y, SelectingX];
+                    tmp.text = selectingChar.ToString();
                     //トリガー入力
                     if (!triggerValue && device.TryGetFeatureValue(CommonUsages.triggerButton, out triggerValue) && triggerValue)
                     {
@@ -103,7 +105,8 @@ public class Hand_Cont_SlideKeys : MonoBehaviour
                 }
                 else
                 {
-                    tmp.text = "";
+                    selectingChar = ' ';
+                    tmp.text = selectingChar.ToString();
                 }
             }
         }

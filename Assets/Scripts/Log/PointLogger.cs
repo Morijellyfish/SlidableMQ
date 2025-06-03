@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PointLogger : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class PointLogger : MonoBehaviour
         char target = TaskManager.Target;
 
         //保存状態の確認
-        if(target == ' ')
+        if (target == ' ')
         {
             if (!Saved)
             {
@@ -41,7 +42,7 @@ public class PointLogger : MonoBehaviour
         }
 
         //TimeUp
-        if(TypingManager.time >= 100)
+        if (TypingManager.time >= 600) //10min
         {
             return;
         }
@@ -57,6 +58,7 @@ public class PointLogger : MonoBehaviour
         switch (GameMode.mode)
         {
             case GameMode.InputMode.SlideKeys:
+                targetPos.x = targetIndex.x;
                 targetPos.y = targetIndex.y;
                 break;
             case GameMode.InputMode.PointKeys:
@@ -70,23 +72,57 @@ public class PointLogger : MonoBehaviour
                 break;
             default:
                 break;
-        };
+        }
+
+        //タイプ可能か確認
+        bool typable_L = false;
+        bool typable_R = false;
+        switch (GameMode.mode)
+        {
+            case GameMode.InputMode.SlideKeys:
+                typable_L = target == LeftHand.GetComponent<Hand_Cont_SlideKeys>().selectingChar;
+                typable_R = target == RightHand.GetComponent<Hand_Cont_SlideKeys>().selectingChar;
+                break;
+            case GameMode.InputMode.PointKeys:
+                typable_L = Mathf.Abs(Point_L.x - targetPos.x) <= 0.25f && Mathf.Abs(Point_L.y - targetPos.y) <= 0.25f;
+                typable_R = Mathf.Abs(Point_R.x - targetPos.x) <= 0.25f && Mathf.Abs(Point_R.y - targetPos.y) <= 0.25f;
+                break;
+            case GameMode.InputMode.StickKeys:
+                break;
+            case GameMode.InputMode.Keyboard:
+                break;
+            default:
+                break;
+        }
+
+        Debug.Log("typable_L : " + typable_L + ", typable_R : " + typable_R);
 
         //ログ
-        string log = $"{Point_L.x:F3},{Point_L.y:F3},{Point_R.x:F3},{Point_R.y:F3},{targetPos.x},{targetPos.y},{target},{TypingManager.time:F4},{GameMode.mode.ToString()},";
+        string log = $"";
+        log += $"{Point_L.x:F3},{Point_L.y:F3},{Point_R.x:F3},{Point_R.y:F3},{targetPos.x},{targetPos.y},";
+        log += $"{target},{TaskManager.TaskCount},{TypingManager.time:F4},{GameMode.mode.ToString()},";
+        log += $"{typable_L},{typable_R},";
         log += $"{Head.transform.position},{Head.transform.rotation},";
         log += $"{TriggerL},{LeftHand.transform.position},{LeftHand.transform.rotation},";
         log += $"{TriggerR},{RightHand.transform.position},{RightHand.transform.rotation}";
         log += "\r\n";
         tmplog += log;
-        Debug.Log(log);
+        //Debug.Log(log);
     }
 
     void FileSave()
     {
-        string path = Path.Combine(Application.persistentDataPath, System.DateTime.Now.ToString("yyyyMMddHHmmss-") + "log.csv");
+        string path = Path.Combine(Application.persistentDataPath, DateTime.Now.ToString("yyyyMMddHHmmss-") + "log.csv");
         Saved = true;
-        tmplog = "Lx,Ly,Rx,Ry,Tx,Ty,Target,Time,SlideMode,HeadP,HeadR,LTrigger,LHandP,LHandR,RTrigger,RHandP,RHandR\r\n" + tmplog;
+        string firstLine = $"";
+        firstLine += $"Lx,Ly,Rx,Ry,Tx,Ty,";
+        firstLine += $"Target,TaskCount,Time,InputMode,";
+        firstLine += $"TypeableL,TypeableR,";
+        firstLine += $"HeadPosition,HeadRotation,";
+        firstLine += $"LTrigger,LHandP,LHandR,";
+        firstLine += $"RTrigger,RHandP,RHandR";
+        firstLine += $"\r\n";
+        tmplog = firstLine + tmplog;
         File.AppendAllText(path, tmplog);
         tmplog = "";
         Debug.Log("Saved");

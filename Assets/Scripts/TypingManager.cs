@@ -27,7 +27,10 @@ public class TypingManager : MonoBehaviour
     void Update()
     {
         //Timer
-        if (TaskManager.TaskCount != 0 && TaskManager.TaskCount != TaskManager.TaskText.Length)
+        if (
+                !(TaskManager.TaskNumber == 0 && TaskManager.TaskCount == 0) //開始前
+                && !(TaskManager.TaskCount == TaskManager.TaskText.Length) //タスク完了後
+            )
         {
             time += Time.timeAsDouble - preTime;
             TimeField.text = time.ToString(".000");
